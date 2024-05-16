@@ -111,10 +111,10 @@ CREATE TABLE user (
     user_id VARCHAR(20) PRIMARY KEY,
     user_password VARCHAR(255) NOT NULL,
     user_email VARCHAR(100) NOT NULL UNIQUE,
-    user_gender : VARCHAR(10) NOT NULL, 
-    user_age : VARCHAR(10) NOT NULL, 
-    user_image : TEXT,
-    user_compony_name : VARCHAR(100), 
+    user_gender VARCHAR(10) NOT NULL, 
+    user_age VARCHAR(10) NOT NULL, 
+    user_image TEXT,
+    user_compony_name VARCHAR(100), 
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
         user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
     ),
@@ -145,6 +145,16 @@ CREATE TABLE trend_board (
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (writer_id) REFERENCES user (user_id)
 );
 
+CREATE TABLE trend_board_comment (
+    trend_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
+    trend_board_number INT NOT NULL,
+    trend_board_contents TEXT NOT NULL,
+    trend_board_writer_id VARCHAR(50) NOT NULL,
+    trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id),
+    CONSTRAINT fk_trend_board_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number)
+);
+
 ## Q&A 게시물 테이블 생성
 CREATE TABLE qna_board (
     qna_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -167,6 +177,16 @@ CREATE TABLE customer_board (
     customer_board_view_count INT NOT NULL DEFAULT(0),
     CONSTRAINT writer_id_fk FOREIGN KEY (writer_id) REFERENCES user (user_id)
 );
+
+CREATE TABLE customer_board_comment (
+    customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
+    customer_board_number INT NOT NULL,
+    customer_board_contents TEXT NOT NULL,
+    customer_board_writer_id VARCHAR(50) NOT NULL,
+    customer_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT writer_id_fk FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id),
+    CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number)
+);
 ## 디자이너 게시물 테이블 생성
 CREATE TABLE degsiner_board (
     degsiner_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -176,6 +196,16 @@ CREATE TABLE degsiner_board (
     degsiner_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     degsiner_board_view_count INT NOT NULL DEFAULT(0),
     CONSTRAINT writer_id_fk FOREIGN KEY (writer_id) REFERENCES user (user_id)
+);
+
+CREATE TABLE degsiner_board_comment (
+    degsiner_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
+    degsiner_board_number INT NOT NULL,
+    degsiner_board_comment_contents TEXT NOT NULL,
+    degsiner_board_comment_writer_id VARCHAR(50) NOT NULL,
+    degsiner_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT writer_id_fk FOREIGN KEY (writer_id) REFERENCES user (user_id),
+    CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number)
 );
 
 ## 개발자 계정 생성
