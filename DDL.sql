@@ -152,7 +152,7 @@ CREATE TABLE trend_board_comment (
     trend_board_comment_writer_id VARCHAR(20) NOT NULL,
     trend_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_trend_board_comment_writer_id FOREIGN KEY (trend_board_comment_writer_id) REFERENCES user (user_id),
-    CONSTRAINT fk_trend_board_comment_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number)
+    CONSTRAINT fk_trend_board_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number)
 );
 
 ## Q&A 게시물 테이블 생성
@@ -185,7 +185,7 @@ CREATE TABLE customer_board_comment (
     customer_board_writer_id VARCHAR(20) NOT NULL,
     customer_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id),
-    CONSTRAINT fk_customer_board_comment_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number)
+    CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number)
 );
 ## 디자이너 게시물 테이블 생성
 CREATE TABLE degsiner_board (
@@ -205,7 +205,7 @@ CREATE TABLE degsiner_board_comment (
     degsiner_board_comment_writer_id VARCHAR(20) NOT NULL,
     degsiner_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (degsiner_board_comment_writer_id) REFERENCES user (user_id),
-    CONSTRAINT fk_degsiner_board_comment_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number)
+    CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number)
 );
 
 ## 개발자 계정 생성
