@@ -23,6 +23,7 @@ CREATE TABLE user (
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
     ),
+    sns_id VARCHAR(255) UNIQUE,
     CONSTRAINT user_email_fk FOREIGN KEY (user_email) REFERENCES email_auth_number (email)
 );
 
@@ -117,8 +118,3 @@ CREATE TABLE degsiner_board_comment (
     CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (degsiner_board_comment_writer_id) REFERENCES user (user_id),
     CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number)
 );
-
-## 개발자 계정 생성
-CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
-
-GRANT ALL PRIVILEGES ON hair.* TO 'developer' @'%';
