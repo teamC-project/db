@@ -16,13 +16,11 @@ CREATE TABLE user (
     user_gender VARCHAR(10) NOT NULL, 
     user_age VARCHAR(10) NOT NULL, 
     user_image TEXT,
-    user_compony_name VARCHAR(100), 
+    user_company_name VARCHAR(100), 
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
-        user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
-    ),
+        user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
-        join_path IN ('HOME', 'KAKAO', 'NAVER')
-    ),
+        join_path IN ('HOME', 'KAKAO', 'NAVER')),
     sns_id VARCHAR(255) UNIQUE,
     CONSTRAINT user_email_fk FOREIGN KEY (user_email) REFERENCES email_auth_number (email)
 );
@@ -37,6 +35,7 @@ CREATE TABLE announcement_board (
     announcement_view_count INT NOT NULL DEFAULT(0),
     CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_writer_id) REFERENCES user (user_id)
 );
+
 ## 트렌드 게시물 테이블 생성
 CREATE TABLE trend_board (
     trend_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,7 +54,8 @@ CREATE TABLE trend_board_image (
         trend_board_number INT NOT NULL,
         CONSTRAINT fk_trend_board_image_number FOREIGN KEY(trend_board_number) REFERENCES trend_board(trend_board_number)
         );
-
+        
+## 트렌드 게시물 답글 테이블 생성
 CREATE TABLE trend_board_comment (
     trend_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
     trend_board_number INT NOT NULL,
@@ -78,6 +78,7 @@ CREATE TABLE qna_board (
     qna_board_comment TEXT,
     CONSTRAINT fk_qna_board_writer_id FOREIGN KEY (qna_board_writer_id) REFERENCES user (user_id)
 );
+
 ## 고객 게시물 테이블 생성
 CREATE TABLE customer_board (
     customer_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -89,6 +90,7 @@ CREATE TABLE customer_board (
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id)
 );
 
+## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
     customer_board_number INT NOT NULL,
@@ -98,6 +100,7 @@ CREATE TABLE customer_board_comment (
     CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id),
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number)
 );
+
 ## 디자이너 게시물 테이블 생성
 CREATE TABLE degsiner_board (
     degsiner_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -109,6 +112,7 @@ CREATE TABLE degsiner_board (
     CONSTRAINT fk_desiner_board_writer_id FOREIGN KEY (degsiner_board_writer_id) REFERENCES user (user_id)
 );
 
+## 디자이너 게시물 답글 테이블 생성
 CREATE TABLE degsiner_board_comment (
     degsiner_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
     degsiner_board_number INT NOT NULL,
@@ -118,3 +122,8 @@ CREATE TABLE degsiner_board_comment (
     CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (degsiner_board_comment_writer_id) REFERENCES user (user_id),
     CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number)
 );
+
+## 개발자 계정 생성
+CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
+
+GRANT ALL PRIVILEGES ON estate.* TO 'developer' @'%';
