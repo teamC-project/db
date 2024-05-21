@@ -34,7 +34,7 @@ CREATE TABLE announcement_board (
     announcement_board_writer_id VARCHAR(20) NOT NULL,
     announcement_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     announcement_board_view_count INT NOT NULL DEFAULT(0),
-    CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_writer_id) REFERENCES user (user_id)
+    CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_board_writer_id) REFERENCES user (user_id)
 );
 
 ## 트렌드 게시물 테이블 생성
