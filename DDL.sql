@@ -51,7 +51,7 @@ CREATE TABLE trend_board (
     trend_board_contents TEXT NOT NULL,
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    trend_board_view_count INT NOT NULL DEFAULT(0),
+    trend_board_like_count INT NOT NULL DEFAULT(0),
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
@@ -104,7 +104,9 @@ CREATE TABLE customer_board_comment (
     customer_board_comment_contents TEXT NOT NULL,
     customer_board_comment_writer_id VARCHAR(20) NOT NULL,
     customer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (customer_board_comment_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (
+        customer_board_comment_writer_id
+    ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
 );
 
@@ -129,7 +131,9 @@ CREATE TABLE degsiner_board_comment (
     CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (
         degsiner_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
-    CONSTRAINT fk_degsiner_board_comment_writer_id_fk FOREIGN KEY (degsiner_board_comment_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_degsiner_board_comment_writer_id_fk FOREIGN KEY (
+        degsiner_board_comment_writer_id
+    ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number) ON DELETE CASCADE
 );
 
