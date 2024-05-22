@@ -65,7 +65,7 @@ CREATE TABLE trend_board_image (
 ## 트렌드 게시물 답글 테이블 생성
 CREATE TABLE trend_board_comment (
     trend_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
-    trend_board_comment_number INT NOT NULL,
+    trend_board_number INT NOT NULL,
     trend_board_comment_contents TEXT NOT NULL,
     trend_board_comment_writer_id VARCHAR(20) NOT NULL,
     trend_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
@@ -100,11 +100,11 @@ CREATE TABLE customer_board (
 ## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
-    customer_board_comment_number INT NOT NULL,
+    customer_board_number INT NOT NULL,
     customer_board_comment_contents TEXT NOT NULL,
     customer_board_comment_writer_id VARCHAR(20) NOT NULL,
     customer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (customer_board_comment_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
 );
 
@@ -122,13 +122,14 @@ CREATE TABLE degsiner_board (
 ## 디자이너 게시물 답글 테이블 생성
 CREATE TABLE degsiner_board_comment (
     degsiner_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
-    degsiner_board_comment_number INT NOT NULL,
+    degsiner_board_number INT NOT NULL,
     degsiner_board_comment_contents TEXT NOT NULL,
     degsiner_board_comment_writer_id VARCHAR(20) NOT NULL,
     degsiner_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (
         degsiner_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_degsiner_board_comment_writer_id_fk FOREIGN KEY (degsiner_board_comment_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number) ON DELETE CASCADE
 );
 
