@@ -135,4 +135,4 @@ CREATE TABLE designer_board_comment (
 ## 개발자 계정 생성
 CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
 
-GRANT ALL PRIVILEGES ON estate.* TO 'developer' @'%';
+GRANT ALL PRIVILEGES ON hair.* TO 'developer' @'%';
