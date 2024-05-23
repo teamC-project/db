@@ -58,7 +58,7 @@ CREATE TABLE trend_board (
 ## 트렌드 게시물 이미지 테이블 생성
 CREATE TABLE trend_board_image (
     trend_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
-    trend_board_url TEXT NOT NULL,
+    trend_board_image_url TEXT NOT NULL,
     trend_board_number INT NOT NULL,
     CONSTRAINT fk_trend_board_image_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number) ON DELETE CASCADE
 );
