@@ -111,31 +111,47 @@ CREATE TABLE customer_board_comment (
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
 );
 
+## 고객 게시물 이미지 테이블 생성
+CREATE TABLE customer_board_image (
+    customer_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
+    customer_board_image_url TEXT NOT NULL,
+    customer_board_number INT NOT NULL,
+    CONSTRAINT fk_customer_board_image_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
+);
+
 ## 디자이너 게시물 테이블 생성
-CREATE TABLE degsiner_board (
-    degsiner_board_number INT PRIMARY KEY AUTO_INCREMENT,
-    degsiner_board_title VARCHAR(100) NOT NULL,
-    degsiner_board_contents TEXT NOT NULL,
-    degsiner_board_writer_id VARCHAR(20) NOT NULL,
-    degsiner_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    degsiner_board_view_count INT NOT NULL DEFAULT(0),
-    CONSTRAINT fk_desiner_board_writer_id FOREIGN KEY (degsiner_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
+CREATE TABLE designer_board (
+    designer_board_number INT PRIMARY KEY AUTO_INCREMENT,
+    designer_board_title VARCHAR(100) NOT NULL,
+    designer_board_contents TEXT NOT NULL,
+    designer_board_writer_id VARCHAR(20) NOT NULL,
+    designer_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    designer_board_view_count INT NOT NULL DEFAULT(0),
+    CONSTRAINT fk_desiner_board_writer_id FOREIGN KEY (designer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
 ## 디자이너 게시물 답글 테이블 생성
-CREATE TABLE degsiner_board_comment (
-    degsiner_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
-    degsiner_board_number INT NOT NULL,
-    degsiner_board_comment_contents TEXT NOT NULL,
-    degsiner_board_comment_writer_id VARCHAR(20) NOT NULL,
-    degsiner_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    CONSTRAINT fk_degsiner_comment_writer_id_fk FOREIGN KEY (
-        degsiner_board_comment_writer_id
+CREATE TABLE designer_board_comment (
+    designer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
+    designer_board_number INT NOT NULL,
+    designer_board_comment_contents TEXT NOT NULL,
+    designer_board_comment_writer_id VARCHAR(20) NOT NULL,
+    designer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT fk_designer_comment_writer_id_fk FOREIGN KEY (
+        designer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
-    CONSTRAINT fk_degsiner_board_comment_writer_id_fk FOREIGN KEY (
-        degsiner_board_comment_writer_id
+    CONSTRAINT fk_designer_board_comment_writer_id_fk FOREIGN KEY (
+        designer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
-    CONSTRAINT fk_degsiner_board_number FOREIGN KEY (degsiner_board_number) REFERENCES degsiner_board (degsiner_board_number) ON DELETE CASCADE
+    CONSTRAINT fk_designer_board_number FOREIGN KEY (designer_board_number) REFERENCES designer_board (designer_board_number) ON DELETE CASCADE
+);
+
+## 디자이너 게시물 이미지 테이블 생성
+CREATE TABLE designer_board_image (
+    designer_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
+    designer_board_image_url TEXT NOT NULL,
+    designer_board_number INT NOT NULL,
+    CONSTRAINT fk_designer_board_image_number FOREIGN KEY (designer_board_number) REFERENCES designer_board (designer_board_number) ON DELETE CASCADE
 );
 
 ## 개발자 계정 생성
