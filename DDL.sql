@@ -20,12 +20,8 @@ CREATE TABLE user (
     user_image TEXT,
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
-        user_role IN (
-            'ROLE_CUSTOMER',
-            'ROLE_DESIGNER',
-            'ROLE_ADMIN'
-        )
-    ),
+        user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
+	),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
     ),
@@ -43,7 +39,6 @@ CREATE TABLE announcement_board (
     announcement_board_view_count INT NOT NULL DEFAULT(0),
     CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
 ## 트렌드 게시물 테이블 생성
 CREATE TABLE trend_board (
     trend_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -52,16 +47,11 @@ CREATE TABLE trend_board (
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
+      trend_board_thumbnail_image LONGTEXT NOT NULL,
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
-## 트렌드 게시물 이미지 테이블 생성
-CREATE TABLE trend_board_image (
-    trend_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
-    trend_board_image_url TEXT NOT NULL,
-    trend_board_number INT NOT NULL,
-    CONSTRAINT fk_trend_board_image_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number) ON DELETE CASCADE
-);
+
 ## 트렌드 게시물 답글 테이블 생성
 CREATE TABLE trend_board_comment (
     trend_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -85,7 +75,6 @@ CREATE TABLE qna_board (
     qna_board_comment TEXT,
     CONSTRAINT fk_qna_board_writer_id FOREIGN KEY (qna_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
 ## 고객 게시물 테이블 생성
 CREATE TABLE customer_board (
     customer_board_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -149,6 +138,14 @@ CREATE TABLE designer_board_image (
     designer_board_image_url TEXT NOT NULL,
     designer_board_number INT NOT NULL,
     CONSTRAINT fk_designer_board_image_number FOREIGN KEY (designer_board_number) REFERENCES designer_board (designer_board_number) ON DELETE CASCADE
+);
+
+## 방문로그 테이블 생성
+CREATE TABLE login_log (
+    sequence INT PRIMARY KEY AUTO_INCREMENT,
+    login_id VARCHAR(20),
+	login_date DATE NOT NULL DEFAULT(now()),
+    CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
 );
 
 ## 개발자 계정 생성
