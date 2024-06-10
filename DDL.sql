@@ -45,6 +45,7 @@ CREATE TABLE trend_board (
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
+		trend_board_thumbnail_image LONGTEXT NOT NULL,
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
