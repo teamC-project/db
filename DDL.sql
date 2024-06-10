@@ -35,7 +35,7 @@ CREATE TABLE user (
 
 ## 공지사항 게시물 테이블 생성
 CREATE TABLE announcement_board (
-    announcement_board_board_number INT PRIMARY KEY AUTO_INCREMENT,
+    announcement_board_number INT PRIMARY KEY AUTO_INCREMENT,
     announcement_board_title VARCHAR(100) NOT NULL,
     announcement_board_contents TEXT NOT NULL,
     announcement_board_writer_id VARCHAR(20) NOT NULL,
@@ -137,9 +137,6 @@ CREATE TABLE designer_board_comment (
     designer_board_comment_contents TEXT NOT NULL,
     designer_board_comment_writer_id VARCHAR(20) NOT NULL,
     designer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    CONSTRAINT fk_designer_comment_writer_id_fk FOREIGN KEY (
-        designer_board_comment_writer_id
-    ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_designer_board_comment_writer_id_fk FOREIGN KEY (
         designer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
