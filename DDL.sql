@@ -83,7 +83,7 @@ CREATE TABLE customer_board (
     customer_board_writer_id VARCHAR(20) NOT NULL,
     customer_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     customer_board_view_count INT NOT NULL DEFAULT(0),
-    is_secret BOOLEAN NOT NULL DEFAULT(false),
+    secret BOOLEAN NOT NULL DEFAULT(false),
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
