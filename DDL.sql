@@ -20,11 +20,7 @@ CREATE TABLE user (
     user_image TEXT,
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
-        user_role IN (
-            'ROLE_CUSTOMER',
-            'ROLE_DESIGNER',
-            'ROLE_ADMIN'
-        )
+        user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
     ),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
@@ -149,6 +145,27 @@ CREATE TABLE login_log (
     login_id VARCHAR(20),
     login_date DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
+);
+
+## 채팅방 테이블 생성
+CREATE TABLE chat_room (
+    room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(50) NOT NULL,
+    designer_id VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES user(user_id),
+    FOREIGN KEY (designer_id) REFERENCES user(user_id)
+);
+
+## 채팅방 message 테이블 생성
+CREATE TABLE chat_message (
+    message_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    room_id BIGINT NOT NULL,
+    sender_id VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES user(user_id)
 );
 
 ## 개발자 계정 생성
