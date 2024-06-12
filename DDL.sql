@@ -21,7 +21,7 @@ CREATE TABLE user (
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
         user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
-	),
+    ),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
     ),
@@ -50,7 +50,6 @@ CREATE TABLE trend_board (
     trend_board_thumbnail_image LONGTEXT NOT NULL,
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
 
 ## 트렌드 게시물 답글 테이블 생성
 CREATE TABLE trend_board_comment (
@@ -144,7 +143,7 @@ CREATE TABLE designer_board_image (
 CREATE TABLE login_log (
     sequence INT PRIMARY KEY AUTO_INCREMENT,
     login_id VARCHAR(20),
-	login_date DATE NOT NULL DEFAULT(now()),
+    login_date DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
 );
 
