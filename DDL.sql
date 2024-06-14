@@ -154,6 +154,30 @@ CREATE TABLE designer_board_image (
 CREATE TABLE login_log (
     sequence INT PRIMARY KEY AUTO_INCREMENT,
     login_id VARCHAR(20),
+    login_date DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
+);
+
+## 채팅방 테이블 생성
+CREATE TABLE chat_room (
+    room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(50) NOT NULL,
+    designer_id VARCHAR(50) NOT NULL,
+    room_name VARCHAR(100) NOT NULL,
+    chat_room_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES user(user_id),
+    FOREIGN KEY (designer_id) REFERENCES user(user_id)
+);
+
+## 채팅방 message 테이블 생성
+CREATE TABLE chat_message (
+    message_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    room_id BIGINT NOT NULL,
+    sender_id VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES user(user_id)
     login_date DATE DEFAULT(now()),
     CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
