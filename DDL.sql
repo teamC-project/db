@@ -21,7 +21,7 @@ CREATE TABLE user (
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
         user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
-	),
+    ),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
     ),
@@ -50,7 +50,6 @@ CREATE TABLE trend_board (
     trend_board_thumbnail_image LONGTEXT NOT NULL,
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
 
 ## 트렌드 게시물 답글 테이블 생성
 CREATE TABLE trend_board_comment (
@@ -144,11 +143,34 @@ CREATE TABLE designer_board_image (
 CREATE TABLE login_log (
     sequence INT PRIMARY KEY AUTO_INCREMENT,
     login_id VARCHAR(20),
-	login_date DATE NOT NULL DEFAULT(now()),
+    login_date DATETIME NOT NULL DEFAULT(now()),
     CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
 );
 
+<<<<<<< HEAD
 
+=======
+## 채팅방 테이블 생성
+CREATE TABLE chat_room (
+    room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(50) NOT NULL,
+    designer_id VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES user(user_id),
+    FOREIGN KEY (designer_id) REFERENCES user(user_id)
+);
+
+## 채팅방 message 테이블 생성
+CREATE TABLE chat_message (
+    message_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    room_id BIGINT NOT NULL,
+    sender_id VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES user(user_id)
+);
+>>>>>>> f5da0f77e6327bfb3c98bc0654e423b5a412c50e
 
 ## 개발자 계정 생성
 CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
