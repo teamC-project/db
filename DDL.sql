@@ -89,7 +89,7 @@ CREATE TABLE customer_board (
     is_secret BOOLEAN NOT NULL DEFAULT(false),
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
+customer_board_parent_comment_number
 ## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -97,6 +97,10 @@ CREATE TABLE customer_board_comment (
     customer_board_comment_contents TEXT NOT NULL,
     customer_board_comment_writer_id VARCHAR(20) NOT NULL,
     customer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    customer_board_parent_comment_number INT default NULL,
+    CONSTRAINT fk_customer_board_parent_comment_number_fk FOREIGN KEY (
+        customer_board_parent_comment_number
+    ) REFERENCES customer_board_comment (customer_board_comment_number) ON DELETE CASCADE,
     CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (
         customer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
