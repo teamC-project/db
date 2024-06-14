@@ -147,9 +147,6 @@ CREATE TABLE login_log (
     CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id)
 );
 
-<<<<<<< HEAD
-
-=======
 ## 채팅방 테이블 생성
 CREATE TABLE chat_room (
     room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -170,7 +167,6 @@ CREATE TABLE chat_message (
     FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id)
 );
->>>>>>> f5da0f77e6327bfb3c98bc0654e423b5a412c50e
 
 ## 개발자 계정 생성
 CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
