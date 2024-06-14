@@ -152,7 +152,8 @@ CREATE TABLE chat_room (
     room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     customer_id VARCHAR(50) NOT NULL,
     designer_id VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    room_name VARCHAR(100) NOT NULL,
+    chat_room_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES user(user_id),
     FOREIGN KEY (designer_id) REFERENCES user(user_id)
 );
@@ -163,7 +164,7 @@ CREATE TABLE chat_message (
     room_id BIGINT NOT NULL,
     sender_id VARCHAR(50) NOT NULL,
     message TEXT NOT NULL,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id)
 );
