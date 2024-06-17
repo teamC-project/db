@@ -20,7 +20,11 @@ CREATE TABLE user (
     user_image TEXT,
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
-        user_role IN ('ROLE_CUSTOMER', 'ROLE_DESIGNER', 'ROLE_ADMIN')
+        user_role IN (
+            'ROLE_CUSTOMER',
+            'ROLE_DESIGNER',
+            'ROLE_ADMIN'
+        )
     ),
     join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
         join_path IN ('HOME', 'KAKAO', 'NAVER')
@@ -31,7 +35,7 @@ CREATE TABLE user (
 
 ## 공지사항 게시물 테이블 생성
 CREATE TABLE announcement_board (
-    announcement_board_number INT PRIMARY KEY AUTO_INCREMENT,
+    announcement_board_board_number INT PRIMARY KEY AUTO_INCREMENT,
     announcement_board_title VARCHAR(100) NOT NULL,
     announcement_board_contents TEXT NOT NULL,
     announcement_board_writer_id VARCHAR(20) NOT NULL,
@@ -82,10 +86,10 @@ CREATE TABLE customer_board (
     customer_board_writer_id VARCHAR(20) NOT NULL,
     customer_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     customer_board_view_count INT NOT NULL DEFAULT(0),
-    secret BOOLEAN NOT NULL DEFAULT(false),
+    is_secret BOOLEAN NOT NULL DEFAULT(false),
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
+customer_board_parent_comment_number
 ## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -93,6 +97,10 @@ CREATE TABLE customer_board_comment (
     customer_board_comment_contents TEXT NOT NULL,
     customer_board_comment_writer_id VARCHAR(20) NOT NULL,
     customer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    customer_board_parent_comment_number INT default NULL,
+    CONSTRAINT fk_customer_board_parent_comment_number_fk FOREIGN KEY (
+        customer_board_parent_comment_number
+    ) REFERENCES customer_board_comment (customer_board_comment_number) ON DELETE CASCADE,
     CONSTRAINT fk_customer_board_comment_writer_id_fk FOREIGN KEY (
         customer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
@@ -125,6 +133,9 @@ CREATE TABLE designer_board_comment (
     designer_board_comment_contents TEXT NOT NULL,
     designer_board_comment_writer_id VARCHAR(20) NOT NULL,
     designer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    CONSTRAINT fk_designer_comment_writer_id_fk FOREIGN KEY (
+        designer_board_comment_writer_id
+    ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_designer_board_comment_writer_id_fk FOREIGN KEY (
         designer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
@@ -167,6 +178,8 @@ CREATE TABLE chat_message (
     sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id)
+    login_date DATE DEFAULT(now()),
+    CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
 ## 개발자 계정 생성
