@@ -107,14 +107,6 @@ CREATE TABLE customer_board_comment (
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
 );
 
-## 고객 게시물 이미지 테이블 생성
-CREATE TABLE customer_board_image (
-    customer_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
-    customer_board_image_url TEXT NOT NULL,
-    customer_board_number INT NOT NULL,
-    CONSTRAINT fk_customer_board_image_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
-);
-
 ## 디자이너 게시물 테이블 생성
 CREATE TABLE designer_board (
     designer_board_number INT PRIMARY KEY AUTO_INCREMENT,
