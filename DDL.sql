@@ -35,7 +35,7 @@ CREATE TABLE user (
 
 ## 공지사항 게시물 테이블 생성
 CREATE TABLE announcement_board (
-    announcement_board_board_number INT PRIMARY KEY AUTO_INCREMENT,
+    announcement_board_number INT PRIMARY KEY AUTO_INCREMENT,
     announcement_board_title VARCHAR(100) NOT NULL,
     announcement_board_contents TEXT NOT NULL,
     announcement_board_writer_id VARCHAR(20) NOT NULL,
