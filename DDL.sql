@@ -158,8 +158,8 @@ CREATE TABLE chat_room (
     designer_id VARCHAR(50) NOT NULL,
     room_name VARCHAR(100) NOT NULL,
     chat_room_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES user(user_id),
-    FOREIGN KEY (designer_id) REFERENCES user(user_id)
+    FOREIGN KEY (customer_id) REFERENCES user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (designer_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 ## 채팅방 message 테이블 생성
