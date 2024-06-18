@@ -44,10 +44,11 @@ CREATE TABLE announcement_board (
     CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 ## 트렌드 게시물 테이블 생성
+## 트렌드 게시물 테이블 생성
 CREATE TABLE trend_board (
     trend_board_number INT PRIMARY KEY AUTO_INCREMENT,
     trend_board_title VARCHAR(100) NOT NULL,
-    trend_board_contents TEXT NOT NULL,
+    trend_board_contents LONGTEXT NOT NULL,
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
