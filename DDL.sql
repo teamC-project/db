@@ -178,8 +178,6 @@ CREATE TABLE chat_message (
     sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id)
-    login_date DATE DEFAULT(now()),
-    CONSTRAINT fk_login_id FOREIGN KEY (login_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 
 ## 개발자 계정 생성
