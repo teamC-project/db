@@ -35,7 +35,7 @@ CREATE TABLE user (
 
 ## 공지사항 게시물 테이블 생성
 CREATE TABLE announcement_board (
-    announcement_board_board_number INT PRIMARY KEY AUTO_INCREMENT,
+    announcement_board_number INT PRIMARY KEY AUTO_INCREMENT,
     announcement_board_title VARCHAR(100) NOT NULL,
     announcement_board_contents TEXT NOT NULL,
     announcement_board_writer_id VARCHAR(20) NOT NULL,
@@ -51,6 +51,7 @@ CREATE TABLE trend_board (
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
+		trend_board_view_count INT NOT NULL DEFAULT(0),
     trend_board_thumbnail_image LONGTEXT NOT NULL,
     CONSTRAINT fk_trend_board_writer_id FOREIGN KEY (trend_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
@@ -105,14 +106,6 @@ CREATE TABLE customer_board_comment (
         customer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_customer_board_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
-);
-
-## 고객 게시물 이미지 테이블 생성
-CREATE TABLE customer_board_image (
-    customer_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
-    customer_board_image_url TEXT NOT NULL,
-    customer_board_number INT NOT NULL,
-    CONSTRAINT fk_customer_board_image_number FOREIGN KEY (customer_board_number) REFERENCES customer_board (customer_board_number) ON DELETE CASCADE
 );
 
 ## 디자이너 게시물 테이블 생성
@@ -177,7 +170,18 @@ CREATE TABLE chat_message (
     message TEXT NOT NULL,
     sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (sender_id) REFERENCES user(user_id)
+    FOREIGN KEY (sender_id) REFERENCES user(user_id),
+);
+
+# 트렌드 게시판 좋아요 관계 테이블 생성
+CREATE TABLE like_table (
+  user_id varchar(20)  NOT NULL,
+  trend_board_number int NOT NULL ,
+  PRIMARY KEY (user_id, trend_board_number),
+  KEY fk_trend_board_idx (trend_board_number),
+  KEY fk_user_id_idx (user_id),
+  CONSTRAINT fk_user_has_trend_board1 FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number),
+  CONSTRAINT fk_user_has_user1 FOREIGN KEY (user_id) REFERENCES  user (user_id)
 );
 
 ## 개발자 계정 생성
