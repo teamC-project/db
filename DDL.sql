@@ -169,7 +169,7 @@ CREATE TABLE chat_message (
     sender_id VARCHAR(50) NOT NULL,
     message TEXT NOT NULL,
     send_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (chatroom_id) REFERENCES chat_room(chatroom_id) ON DELETE CASCADE,
+    FOREIGN KEY (chatroom_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
