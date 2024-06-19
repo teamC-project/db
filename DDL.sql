@@ -44,11 +44,10 @@ CREATE TABLE announcement_board (
     CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 ## 트렌드 게시물 테이블 생성
-## 트렌드 게시물 테이블 생성
 CREATE TABLE trend_board (
     trend_board_number INT PRIMARY KEY AUTO_INCREMENT,
     trend_board_title VARCHAR(100) NOT NULL,
-    trend_board_contents LONGTEXT NOT NULL,
+    trend_board_contents TEXT NOT NULL,
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
@@ -91,7 +90,7 @@ CREATE TABLE customer_board (
     secret BOOLEAN NOT NULL DEFAULT(false),
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
+customer_board_parent_comment_number
 ## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -159,18 +158,18 @@ CREATE TABLE chat_room (
     designer_id VARCHAR(50) NOT NULL,
     room_name VARCHAR(100) NOT NULL,
     chat_room_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES user(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (designer_id) REFERENCES user(user_id) ON DELETE CASCADE
+    FOREIGN KEY (customer_id) REFERENCES user(user_id),
+    FOREIGN KEY (designer_id) REFERENCES user(user_id)
 );
 
 ## 채팅방 message 테이블 생성
 CREATE TABLE chat_message (
     message_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    room_id BIGINT NOT NULL,
+    chatroom_id BIGINT NOT NULL,
     sender_id VARCHAR(50) NOT NULL,
     message TEXT NOT NULL,
-    sendDatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (room_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
+    send_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chatroom_id) REFERENCES chat_room(chatroom_id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
