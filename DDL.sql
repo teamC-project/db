@@ -170,7 +170,7 @@ CREATE TABLE chat_message (
     message TEXT NOT NULL,
     send_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (chatroom_id) REFERENCES chat_room(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (sender_id) REFERENCES user(user_id) ON DELETE CASCADE
+    FOREIGN KEY (sender_id) REFERENCES user(user_id) ON DELETE CASCADE 
 );
 
 # 트렌드 게시판 좋아요 관계 테이블 생성
