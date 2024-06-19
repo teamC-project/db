@@ -44,11 +44,10 @@ CREATE TABLE announcement_board (
     CONSTRAINT fk_announcement_board_writer_id FOREIGN KEY (announcement_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
 ## 트렌드 게시물 테이블 생성
-## 트렌드 게시물 테이블 생성
 CREATE TABLE trend_board (
     trend_board_number INT PRIMARY KEY AUTO_INCREMENT,
     trend_board_title VARCHAR(100) NOT NULL,
-    trend_board_contents LONGTEXT NOT NULL,
+    trend_board_contents TEXT NOT NULL,
     trend_board_writer_id VARCHAR(20) NOT NULL,
     trend_board_write_datetime DATETIME NOT NULL DEFAULT(now()),
     trend_board_like_count INT NOT NULL DEFAULT(0),
@@ -91,7 +90,7 @@ CREATE TABLE customer_board (
     secret BOOLEAN NOT NULL DEFAULT(false),
     CONSTRAINT fk_customet_board_writer_id FOREIGN KEY (customer_board_writer_id) REFERENCES user (user_id) ON DELETE CASCADE
 );
-
+customer_board_parent_comment_number
 ## 고객 게시물 답글 테이블 생성
 CREATE TABLE customer_board_comment (
     customer_board_comment_number INT PRIMARY KEY AUTO_INCREMENT,
@@ -159,8 +158,8 @@ CREATE TABLE chat_room (
     designer_id VARCHAR(50) NOT NULL,
     room_name VARCHAR(100) NOT NULL,
     chat_room_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES user(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (designer_id) REFERENCES user(user_id) ON DELETE CASCADE
+    FOREIGN KEY (customer_id) REFERENCES user(user_id),
+    FOREIGN KEY (designer_id) REFERENCES user(user_id)
 );
 
 ## 채팅방 message 테이블 생성
@@ -181,8 +180,8 @@ CREATE TABLE like_table (
   PRIMARY KEY (user_id, trend_board_number),
   KEY fk_trend_board_idx (trend_board_number),
   KEY fk_user_id_idx (user_id),
-  CONSTRAINT fk_user_has_trend_board1 FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number) ON DELETE CASCADE,
-  CONSTRAINT fk_user_has_user1 FOREIGN KEY (user_id) REFERENCES  user (user_id) ON DELETE CASCADE
+  CONSTRAINT fk_user_has_trend_board1 FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number),
+  CONSTRAINT fk_user_has_user1 FOREIGN KEY (user_id) REFERENCES  user (user_id)
 );
 
 ## 개발자 계정 생성
