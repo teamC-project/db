@@ -127,21 +127,14 @@ CREATE TABLE designer_board_comment (
     designer_board_comment_contents TEXT NOT NULL,
     designer_board_comment_writer_id VARCHAR(20) NOT NULL,
     designer_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
-    CONSTRAINT fk_designer_comment_writer_id_fk FOREIGN KEY (
-        designer_board_comment_writer_id
-    ) REFERENCES user (user_id) ON DELETE CASCADE,
+    designer_board_parent_comment_number INT default NULL,
+    CONSTRAINT fk_designer_board_parent_comment_number_fk FOREIGN KEY (
+        designer_board_parent_comment_number
+    ) REFERENCES designer_board_comment (designer_board_comment_number) ON DELETE CASCADE,
     CONSTRAINT fk_designer_board_comment_writer_id_fk FOREIGN KEY (
         designer_board_comment_writer_id
     ) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_designer_board_number FOREIGN KEY (designer_board_number) REFERENCES designer_board (designer_board_number) ON DELETE CASCADE
-);
-
-## 디자이너 게시물 이미지 테이블 생성
-CREATE TABLE designer_board_image (
-    designer_board_image_number INT PRIMARY KEY AUTO_INCREMENT,
-    designer_board_image_url TEXT NOT NULL,
-    designer_board_number INT NOT NULL,
-    CONSTRAINT fk_designer_board_image_number FOREIGN KEY (designer_board_number) REFERENCES designer_board (designer_board_number) ON DELETE CASCADE
 );
 
 ## 방문로그 테이블 생성
