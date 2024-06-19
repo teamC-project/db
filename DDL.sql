@@ -180,8 +180,8 @@ CREATE TABLE like_table (
   PRIMARY KEY (user_id, trend_board_number),
   KEY fk_trend_board_idx (trend_board_number),
   KEY fk_user_id_idx (user_id),
-  CONSTRAINT fk_user_has_trend_board1 FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number),
-  CONSTRAINT fk_user_has_user1 FOREIGN KEY (user_id) REFERENCES  user (user_id)
+  CONSTRAINT fk_user_has_trend_board1 FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number) ON DELETE CASCADE,
+  CONSTRAINT fk_user_has_user1 FOREIGN KEY (user_id) REFERENCES  user (user_id) ON DELETE CASCADE
 );
 
 ## 개발자 계정 생성
