@@ -63,6 +63,10 @@ CREATE TABLE trend_board_comment (
     trend_board_comment_contents TEXT NOT NULL,
     trend_board_comment_writer_id VARCHAR(20) NOT NULL,
     trend_board_comment_write_datetime DATETIME NOT NULL DEFAULT(now()),
+    trend_board_parent_comment_number INT default NULL,
+    CONSTRAINT fk_trend_board_parent_comment_number_fk FOREIGN KEY (
+        trend_board_parent_comment_number
+    ) REFERENCES trend_board_comment (trend_board_comment_number) ON DELETE CASCADE,
     CONSTRAINT fk_trend_board_comment_writer_id FOREIGN KEY (trend_board_comment_writer_id) REFERENCES user (user_id) ON DELETE CASCADE,
     CONSTRAINT fk_trend_board_number FOREIGN KEY (trend_board_number) REFERENCES trend_board (trend_board_number) ON DELETE CASCADE
 );
