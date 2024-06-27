@@ -17,7 +17,7 @@ CREATE TABLE user (
         user_gender IN ('MALE', 'FEMALE')
     ),
     user_age VARCHAR(10) NOT NULL,
-    user_image TEXT,
+    user_image LONGTEXT,
     user_company_name VARCHAR(100),
     user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
         user_role IN (
